@@ -168,7 +168,7 @@ export default class SummaryTable extends Component {
           {
             key: item.report,
             content: (
-              <a href={"http://127.0.0.1:5000/wscdn/" + item.report} target="_blank">
+              <a href={this.props.axiosStore.instance.defaults.baseURL + "/../wscdn/" + item.report} target="_blank">
                 <Button appearance="primary">Open Report</Button>
               </a>
             )

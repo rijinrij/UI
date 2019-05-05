@@ -43,7 +43,6 @@ export default class FormExample extends Component<void, void> {
         </form>
         <p>The data submitted by the form will appear below:</p>
         <iframe
-          
           src=""
           title="Checkbox Resopnse Frame"
           id="submitFrame"

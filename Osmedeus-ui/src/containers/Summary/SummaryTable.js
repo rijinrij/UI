@@ -62,7 +62,7 @@ const createHead = (withWidth) => {
         key: 'port',
         content: 'Ports',
         shouldTruncate: true,
-        // isSortable: true,
+        isSortable: true,
         width: withWidth ? 20 : undefined,
       },
       {

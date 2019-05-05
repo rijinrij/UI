@@ -4,7 +4,7 @@ import Avatar from '@atlaskit/avatar';
 import DropdownMenu, {
   DropdownItemGroup,
   DropdownItem,
-} from '@atlaskit/dropdown-menu';import styled from 'styled-components';
+} from '@atlaskit/dropdown-menu'; import styled from 'styled-components';
 import EmptyState from '@atlaskit/empty-state';
 import DynamicTable from '@atlaskit/dynamic-table';
 import SearchIcon from '@atlaskit/icon/glyph/search';
@@ -47,24 +47,11 @@ const createHead = (withWidth) => {
         shouldTruncate: true,
         width: withWidth ? 40 : undefined,
       },
-      
-      // {
-      //   key: 'output',
-      //   content: 'Output Path',
-      //   // shouldTruncate: true,
-      //   isSortable: true,
-      //   width: withWidth ? 30 : undefined,
-      // },
+
       {
         key: 'module',
         content: 'Modules',
         isSortable: true,
-        width: withWidth ? 10 : undefined,
-      },
-      {
-        key: 'details',
-        content: 'Details',
-        // isSortable: true,
         width: withWidth ? 10 : undefined,
       },
 
@@ -75,25 +62,30 @@ const createHead = (withWidth) => {
 const head = createHead(false);
 @inject("sessStore", "axiosStore")
 @observer
-export default class LogTable extends Component {
+export default class ConfigTable extends Component {
 
 
   state = {
     rows: null,
-    tamperRow : null,
+    tamperRow: null,
   }
 
   componentDidMount() {
     const content = this.props;
     const ws = content.ws;
     console.log(ws);
-    
+
     // get data 
-    this.props.axiosStore.instance.post('/logs/' + ws)
+    this.props.axiosStore.instance.get('/config')
       .then(response => {
-        if (response.data.hasOwnProperty('commands')) {
-          this.setState({ rows: response.data.commands })
-          this.setState({ tamperRow: response.data.commands })
+        if (response.data) {
+          let rows = [];
+          _.forEach(response.data, function (value, key) {
+            rows.push({ 'name' :key, 'value': value });
+          });
+          this.setState({ rows: rows });
+          this.setState({ tamperRow: rows });
+          
         }
         else {
           this.setState({ error: true });
@@ -145,7 +137,7 @@ export default class LogTable extends Component {
           <EmptyState header={"Nothing to show"} />
         </Wrapper>
       )
-      
+
     }
     else {
       let tamperRow = this.state.rows.map((item, index) => ({
@@ -169,18 +161,18 @@ export default class LogTable extends Component {
             key: item.output_path,
             content: (
               <ButtonGroup>
-                <a href={ this.props.axiosStore.instance.defaults.baseURL + "/../stdout/" + item.std_path} target="_blank">
+                <a href={"http://127.0.0.1:5000/stdout/" + item.std_path} target="_blank">
                   <Button appearance="primary">Std Path</Button>
                 </a>
 
-                <a href={this.props.axiosStore.instance.defaults.baseURL + "/../stdout/" + item.output_path} target="_blank">
+                <a href={"http://127.0.0.1:5000/stdout/" + item.output_path} target="_blank">
                   <Button appearance="help">Output Path</Button>
                 </a>
               </ButtonGroup>
 
             ),
           },
-          
+
         ],
       }));
 
@@ -215,7 +207,7 @@ export default class LogTable extends Component {
       );
 
     }
-    
+
   }
 
 }

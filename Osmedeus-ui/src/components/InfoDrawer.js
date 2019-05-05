@@ -63,28 +63,8 @@ export default class CreateDrawer extends Component {
           }
         />
 
-        {/* {
-          createItems.map(itemGroup => {
-            return (
-              <AkNavigationItemGroup key={itemGroup.title} title={itemGroup.title}>
-                {
-                  itemGroup.items.map(item => {
-                    const [url, text, label, Icon] = item;
-                    return (
-                      <AkNavigationItem
-                        key={url}
-                        href={url}
-                        icon={<Icon label={label}/>}
-                        text={text.valueOf()}
-                        onClick={this.props.onItemClicked}
-                      />
-                    );
-                  })
-                }
-              </AkNavigationItemGroup>
-            )
-          })
-        } */}
+        
+
       </div>
     )
   };

@@ -22,6 +22,8 @@ import Wrapper from '../components/ContentWrapper';
 import { colors } from '@atlaskit/theme';
 import InfoIcon from '@atlaskit/icon/glyph/info';
 import Flag, { FlagGroup } from '@atlaskit/flag';
+import HomePage from '../pages/HomePage';
+
 
 @inject("sessStore", "axiosStore")
 @observer
@@ -30,6 +32,16 @@ class LoginPage extends Component {
   state = {
     isLogged: this.props.sessStore.isLogged,
     error: false
+  }
+
+  componentDidMount() {
+    const jwt = window.localStorage.getItem('jwt');
+    if (jwt){
+      this.props.axiosStore.setJWT(jwt);
+      this.props.sessStore.setisLogged();
+      console.log(this.props.sessStore.isLogged);
+      this.setState({ isLogged: this.props.sessStore.isLogged })
+    }
   }
 
   submitHandler = (data) => {
@@ -93,8 +105,8 @@ class LoginPage extends Component {
             size={"medium"}
             maxImageWidth={100}
             primaryAction={
-              <InlineMessage title="Where to find credentials" type="info">
-                <p>Check your config.conf file</p>
+              <InlineMessage position="bottom middle" title="Where to find credentials" type="info">
+                <p>Check your config.conf file (or maybe core/config.conf)</p>
               </InlineMessage>
             }
           />
@@ -131,9 +143,18 @@ class LoginPage extends Component {
       )
     }
     else {
-      return (
-        this.props.children
-      )
+      if (this.props.children) {
+        return (
+          this.props.children
+        )
+      }
+      else{
+        return (
+          <HomePage />
+        )
+      }
+
+      
     }
 
   }

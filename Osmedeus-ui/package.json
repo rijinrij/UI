@@ -35,7 +35,7 @@
     "@atlaskit/form": "^5.2.6",
     "@atlaskit/global-navigation": "^6.2.7",
     "@atlaskit/icon": "^13.4.0",
-    "@atlaskit/inline-edit": "^7.0.7",
+    "@atlaskit/inline-edit": "^9.0.5",
     "@atlaskit/inline-message": "^8.0.3",
     "@atlaskit/logo": "^10.0.2",
     "@atlaskit/modal-dialog": "^8.0.6",
